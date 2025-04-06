@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css"/>
+    <title>Namaste React</title>
+</head>
+<body>
+    <!--React only manipulate code inside root if anything above it or lower it react will not touch it
+    So basically div1 will work frst then div2 then div 3
+    then core React CDN link bring things , then DOM link will work then App.js code will come 
+    which will replace all the code in root
+    So Inside Root will get printed but got replaced by code of App.js
+    So basically since React is an LIBRARY its affecting only a small part -->
+    <div>Above Root</div>
+    <div id="root">
+        <div>Inside Root</div>
+    </div>
+    <div>Below Root</div>
+
+    <!--These links are CDN React links used to bring react inside our normal project -->
+    <!-- this one is for core react -->
+    <script crossorigin 
+    src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <!-- this one is for react for browser (DOM) -->
+    <script crossorigin
+     src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+     <!--Can we change the order of script  A BIG NO 
+     frst we need to bring the core features of React , then the features related to browser
+     then only we can put the code of React-->
+    <script src="./App.js">
+    </script>
+</body>
+</html>
