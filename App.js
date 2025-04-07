@@ -2,9 +2,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+
+const element=<span></span>
+
 /*this is for creating an elemnt and since its a core React thing so we use React only
     It takes 3 argument -> tag name , an object-> where we give attributes to tags , what should we write in tag (the child of the tag)*/ 
-    const heading=React.createElement('h1',{id:'heading'},'Hello React');
+    const heading=React.createElement(
+        'h1',
+        {id:'heading'},
+        'Hello React'
+    );
+
+/*the below is same as of the above one just above one is written in core React and below one is written in JSX
+JSX is not HTML code or React code , its HTML like or XML like syntax
+*/
+const jsxHeading=<h1 id='heading'>Hello I am written in JSX syntax</h1>
+console.log(jsxHeading);
 
 /*
  <div id='parent'>
@@ -31,9 +44,19 @@ import ReactDOM from 'react-dom/client';
  
 */
 
+const Heading2=()=>(
+    <div id="container">
+    <Heading1/>  
+    {element}
+   <h2> {console.log('ABC')}</h2>
+     <h1 className="heading">Hello honey bunny</h1>  
+     </div>
+  )
+
 
 /*here it is manipulation in DOM , so we use ReactDOM
     this root is the place where all react code will run*/
     const root=ReactDOM.createRoot(document.getElementById('root'))
 
     root.render(heading);
+

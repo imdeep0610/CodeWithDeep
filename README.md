@@ -1,5 +1,5 @@
 # REACT STORY
-Episode 2
+# Episode 2
 NPM -> its a repo which hosted all the packages required to istall in our system
 its full form is not Node Package Manager
 
@@ -42,8 +42,7 @@ NOTE : Never bring react through CDN links , always do this through installing t
 if we do it through CDN links , the version will not get uodated and it will also involve calling something from different network
 so , add it in node_modules only
 
-
-# PARCEL
+ PARCEL
 It will do dev build -> set Local server 
 HMR -> Hot Module Replacement -> means if we do any changes it will again do the dev build automaticallym -> it has a file called .parcel-cache which will give the already used data making it faster also
       using FILE WATCHING Algorithm (which is written in C++)
@@ -56,7 +55,7 @@ Tree Shaking -> if we have lots of code but we need 4-5 lines of code only , par
 Provide HTTPs also
 Different build for DEV and production(it will take little more time)
 
-# Support Older Browser version
+Support Older Browser version
 it can be done using  "browserslist" package present in node_module , just add it in package.json and tell which version of browser our app need to support
 
  "browserslist":[
@@ -65,4 +64,77 @@ it can be done using  "browserslist" package present in node_module , just add i
     "last 2 version"  -> this will support last 2 version of all browser 
   ]
 It will take an array -> the mentioned one will support definitely but other may or may not  
+
+
+# Episode 3
+How to start our app -> npx parcel index.html
+instaed of using it every time , we need to the modification in scripts of pakage.json
+"scripts": {
+    "start":"parcel index.html",
+    "build" : "parcel build index.html",
+    "test": "jest"
+  },
+here we say by using start -> we refer parcel index.html (start to normally start our app) -> npm run start or npm start (same as of npx parcel index.html)
+
+for production we use build : npm run build (same as of npx parcel build index.html)
+
+here we basically shorten the syntax
+
+ const heading=React.createElement(
+        'h1',
+        {id:'heading'},
+        'Hello React'
+    );
+creating element using pure React here js object is created , then root will be created using
+
+const root=ReactDOM.createRoot(document.getElementById('root'))
+
+and then root will render all the object HTML element
+root.render(heading);
+
+but we are using JSX 
+const jsxHeading=<h1 id='heading'>Hello I am written in JSX syntax</h1>
+here JS engine doesn't understand JSX code , it will understand only pure js code , PARCEL will do this for us using BABEL package , it works as TRANSPILER and change it into createElement
+
+when root render the code BABEL will chnage it into createElement form only and then JS engine work on it
+
+const jsxHeading=<h1 id='heading'>Hello I am written in JSX syntax</h1>
+if we write JSX in single line then fine otherwise use () , so that BABEL understand where JSX started and ends
+const jsxHeading=(
+  <h1 id='heading'>
+  Hello I am written in JSX syntax
+  </h1>)
+
+
+*Bracket Pair Colorization Toggler -> extension used for coloring bracket in diff color to increase readability
+Prettier Code Formatter -> formats our code   
+
+REACT COMPONENT -> 1. Class Component   2. Functional Component
+
+Functional Component -> A JS function that return a piece of JSX code or raect element 
+[React Element => is jsx code]
+
+const Heading1=()=>{
+  return <h1>Hello honey bunny</h1>
+} 
+
+const Heading=()=> <h1>Hello honey bunny</h1>
+
+const Heading2=()=>(
+  <div id="container">
+  <Heading1/>  -> here we render Component (BABEL will understand with this syntax)
+   <h1 className="heading">Hello honey bunny</h1>  -> If we are using multiple line use ()
+   </div>
+)
+
+eg->root.render(<Heading/>) -> way to render the component 
+
+Component Composition -> Component composition in React is a design pattern where you build complex UIs by combining smaller, reusable components, instead of writing one big monolithic component.
+
+How to write React element -> {write anything inside it}
+
+Basically we can put anything inside anything like Component inside component , element inside component , component insode element
+for element we use {ele} and for component <Component/> or <Component></Component> or {Component()} (all are same thing)
+
+
           
