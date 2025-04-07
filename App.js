@@ -1,3 +1,7 @@
+//basically these two we are importing from the react present in node_modules so that we can use it in our app
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
 /*this is for creating an elemnt and since its a core React thing so we use React only
     It takes 3 argument -> tag name , an object-> where we give attributes to tags , what should we write in tag (the child of the tag)*/ 
     const heading=React.createElement('h1',{id:'heading'},'Hello React');
@@ -24,6 +28,7 @@
 
  This looks is easier in normal html, but looks complicated in React and here JSX comes into the picture
  using JSX we can write React code in html and React.createElement is avoided
+ 
 */
 
 

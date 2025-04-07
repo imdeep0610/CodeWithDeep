@@ -21,16 +21,22 @@
 
     <!--These links are CDN React links used to bring react inside our normal project -->
     <!-- this one is for core react -->
-    <script crossorigin 
-    src="https://unpkg.com/react@18/umd/react.development.js"></script>
+     <!--No need to bring react through CDN links , always go with npm i-->
+
+    <!-- <script crossorigin 
+    src="https://unpkg.com/react@18/umd/react.development.js"></script> -->
+
     <!-- this one is for react for browser (DOM) -->
-    <script crossorigin
-     src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- <script crossorigin
+     src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> -->
 
      <!--Can we change the order of script  A BIG NO 
      frst we need to bring the core features of React , then the features related to browser
      then only we can put the code of React-->
-    <script src="./App.js">
+     <!--if we didn't add type='module' , browser will treat it as normal js file which will not support import or export
+     statement so we cannot import React in our app-->
+    <script type='module' src="./App.js">
     </script>
 </body>
 </html>
