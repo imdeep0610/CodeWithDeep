@@ -145,7 +145,7 @@ That's why first {} -> for Js code in JSX  and second {} -> for JS object
 
 CONFIG DRIVEN UI -> Means our UI is controlled by data 
         For eg : For Delhi people , in Swiggy the offer cards show diff UI , for Bengaluru its diff
-
+        The data coming from backend , decides the UI of the app
 
 PROPS -> When we want to dynamically pass the data to components , we pass it as props
 eg: Restaurant Container component
@@ -160,3 +160,8 @@ const RestaurantCard=(props)={   instead of (props) we can destructure it here o
          <h4>{props.rating}</h4>
          <h4>{props.time}</h4>
 }
+These are all about JS not about React
+
+NOTE: Always use KEY attribute while using map()
+Because React doesn't uniquely identify the element , so when it will re-render everything but with key it will uniquely identify it and render only the new one.
+Don't use index instead of key because same index can be given again id earlier element is deleted  
