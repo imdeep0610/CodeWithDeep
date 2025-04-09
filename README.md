@@ -137,4 +137,26 @@ Basically we can put anything inside anything like Component inside component , 
 for element we use {ele} and for component <Component/> or <Component></Component> or {Component()} (all are same thing)
 
 
-          
+# Episode 4
+Inline CSS -> style={{color:'red'}}  
+basically this style is an js object style={color:'red',font-size:'34px'}
+and since we are writing JS code in JSX , we need to use {}
+That's why first {} -> for Js code in JSX  and second {} -> for JS object   
+
+CONFIG DRIVEN UI -> Means our UI is controlled by data 
+        For eg : For Delhi people , in Swiggy the offer cards show diff UI , for Bengaluru its diff
+
+
+PROPS -> When we want to dynamically pass the data to components , we pass it as props
+eg: Restaurant Container component
+<RestaurantCard resName='Deep Flavour'  cuisines='North Indian Food , Asian' rating='4.4 star' time='38 mins'/>
+<RestaurantCard resName='KFC' cuisines='Burger , Fast Foods' rating='4.2 star' time='42mins'/>
+
+const RestaurantCard=(props)={   instead of (props) we can destructure it here only ({resName,cuisines}) -> this is same as of 
+                                const {resName,cuisine}=props;
+                                If we destructure it already we can directly use it like {resName} , otherwise {props.resName}
+         <h3>{props.resName}</h3>
+         <h4>{props.cuisines}</h4>
+         <h4>{props.rating}</h4>
+         <h4>{props.time}</h4>
+}
