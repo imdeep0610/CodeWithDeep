@@ -28,7 +28,7 @@
 .nav-items  img{
     width:25px
 }
-.search{
+.filter{
     padding:10px;
 }
 .res-card{
@@ -48,4 +48,9 @@
 .res-container{
     display: flex;
     flex-wrap:wrap;
+}
+.filter-btn{
+    margin:10px;
+    padding: 5px;
+    cursor:pointer;
 }

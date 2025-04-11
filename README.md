@@ -164,4 +164,27 @@ These are all about JS not about React
 
 NOTE: Always use KEY attribute while using map()
 Because React doesn't uniquely identify the element , so when it will re-render everything but with key it will uniquely identify it and render only the new one.
-Don't use index instead of key because same index can be given again id earlier element is deleted  
+Don't use index instead of key because same index can be given again id earlier element is deleted 
+
+
+# Episode 5
+Folder structure
+components -> all components is placed here , name should be same as of Components
+utils -> the extra things which is common
+
+There are two types of export/import for files
+1. default export/import -> we cannot use two default export in a single file
+eg : export default Header
+default export is imported directly
+import Header from './Header';
+
+2. named export/import -> it is used when we export multiple things in single file. 
+eg : export const Body=()=>{}
+For importing named export we need to use {}
+import {Body} from './components';
+
+
+HOOKS 
+Note: Whenever state variable updates , react re-render the components
+
+1. useState
