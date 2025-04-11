@@ -187,4 +187,112 @@ import {Body} from './components';
 HOOKS 
 Note: Whenever state variable updates , react re-render the components
 
-1. useState
+1. useState -> this is a hook given by react , it take ttwo things one state variable , state function
+when this variable get updated using state function , useState will re-render the whole component and UI get uodated
+Basically state function is keeping track of values of variable , if its changes it will update it and then call the component to render it.
+When state variable is updated , react triggers reconcilation cycle (re-render the component)
+
+const [loginBtn , setLoginBtn]=useState('Login'); 
+<button className='login' onClick={(()=>{
+                  loginBtn==='Login' ? (setLoginBtn('Logout')) : (setLoginBtn('Login'))
+               })}>{loginBtn}</button>
+here this is const even though its value getting updated bcoz each time component get rendered , new variable is created here so old variable value is not updating
+Herr in React, only this button value is chnaging and if rest part are not chnaged then in re-rendering only this button part will get updated , rest other remains same . This is diff algorithm
+
+const [searchText,setSearchText]=useState('');
+ <div className='search'>
+  <input type='text' className='search-box' value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
+  <button>Search</button>
+</div>
+Here we have created a search box , so we need a state variable to store it , and since we have given value={searchText} means we ties the value of search box to the state variable so we cannot update the search box without updating the state variable .
+Since state variable is empty and not getting updated here , so if we do not use onChange={} , our state variable will not get updated and if we try to enter any value in the search box , it will not work
+Here onChange will update the state variable as soon as the search box input chnages
+ 
+Note : With each time we enter some value in the search box , our component get re-render , since react render the component so fast it will not affect much
+Here component will re-render each time but only changed valued get updated , rest other remains same 
+
+
+
+# Episode 6
+Monolith Services ->
+Monolith services refer to when a software system is designed as a single, unified service or application — all features, logic, and functionality are bundled together into one codebase and usually deployed as one unit.
+
+“One service to handle everything — user auth, payment, order tracking, admin, UI, etc. — all baked into one.”
+
+[Monolith Service]
+│
+├── Authentication module
+├── Product Catalog module
+├── Order Management module
+├── Payment Gateway integration
+├── Admin Dashboard
+└── Database Access Layer
+
+Microservices -> 
+Microservices architecture is a design style where an application is broken into small, independent services, each focused on a single piece of functionality and able to run, deploy, and scale independently.
+
+Each service:
+
+Has its own codebase
+
+Often has its own database
+
+Communicates with others via APIs (usually HTTP/REST or messaging like RabbitMQ/Kafka)
+
+Let’s take an e-commerce app again. Instead of bundling everything together (like in a monolith), you break it into separate services:
+
+User Service – Handles signup, login, user profile
+
+Product Service – Manages product catalog
+
+Order Service – Manages orders and history
+
+Payment Service – Integrates with Stripe/Razorpay/etc.
+
+Notification Service – Sends email/SMS
+
+Search Service – Manages product search
+
+Each service is deployed separately and can be scaled based on its own needs.
+
+And even we can distribute it as Backend , Frontend , Auth , Database etc , each services can be of diff language and even can run on their own specific port
+
+
+Two ways of fetching data from API calls -:
+1. Load -> API Calls (assume it takes 500ms) -> Render the page
+here while API calls , nothing is visible on screen and suddenly data appeared . 
+
+2. Load -> Render -> API calls -> Render 
+Here while loading we Render the structure and then do the API calls , it will atlead show the skeleton to the user till rendering and as API calls completes , data is visible on the screen after 2nd rendering 
+Here we have to do 2 times rendering , React has very fast rendering methods and 2 can be ignored if we see the user experience is more reliable in this approach
+
+For making API calls in react , use "useEffect" hook
+
+Here when we render the components then useEffect callback function will work (API calls),then the result will be printed on the UI
+eg: useEffect(()=>{
+  console.log('Use Effect called')
+},[]);
+console.log(Body rendered); 
+Output -> Body rendered 
+          Use Effect called
+
+   useEffect(()=>{  -> here we are doing a BACKEND CALL
+        fetchData();
+    },[]);
+
+    const fetchData=async()=>{
+      const data=await fetch(
+         'https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.594048&lng=88.335677&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
+      );
+
+      const res=data.json();
+      console.log(res);
+    }          
+ Whenever we are doing any API calls , while data is loaded show a fallback UI , i.e a SPINNING LOADER
+ but showing this is outdated , nowadays industry is using SHIMMER UI -> It resembles the actual UI (kind of fake page).
+ While page load , render it with SHIMMER UI , and when API calls data comes , render it with actual UI   
+
+
+NOTE : Why React is afster?
+React is faster bcoz of Virtual DOM, the reconcilation algoritm (React Fiber) which comapres the two Virtaul DOM (older and updated one)
+and only changes the updated part , makes React faster.
