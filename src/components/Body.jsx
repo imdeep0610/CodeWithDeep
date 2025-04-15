@@ -4,6 +4,7 @@ import {useState,useEffect} from 'react';
 
 const Body=()=>{
    const [restList,setRestList]=useState([]);
+   const [filterRestList,setFilterRestList]=useState([]);
    const [searchText,setSearchText]=useState('');
 
     useEffect(()=>{
@@ -17,6 +18,10 @@ const Body=()=>{
 
       const res=await data.json();
       setRestList(res?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+
+      /*Here we are using thiswhen we want to filter on the basis of search result bcoz when we use only setRestList , it will 
+      give the correct ans in only first time , next time we want to filter it will try to filter on the already filter data*/ 
+      setFilterRestList(res?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
       console.log(res);
     }
 
@@ -34,22 +39,25 @@ const Body=()=>{
                <button onClick={()=>{
                   console.log(searchText)
                  const filterRes= restList.filter((res)=>{
-                     res.info.name.includes(searchText);
+                      return res.info.name.toLowerCase().includes(searchText.toLowerCase());
                   });
-                    setRestList(filterRes);
+                  console.log(filterRes);
+
+                  setFilterRestList(filterRes);
                }}>Search</button>
             </div>
               <button className='filter-btn' onClick={()=>{
-                 const filterList=restList.filter((res)=>res.info.avgRating >4.6);
+                 const filterList=restList.filter((res)=>res.info.avgRating >4.2);
                  console.log(filterList)
-                 setRestList(filterList);
+               //   setRestList(filterList);
+                 setFilterRestList(filterList)
               }}>Top Rated Restaurant</button>
           </div>
           <div className='res-container'>
               {/* <RestaurantCard resName='Deep Flavour'  cuisines='North Indian Food , Asian' rating='4.4 star' time='38 mins'/>
               <RestaurantCard resName='KFC' cuisines='Burger , Fast Foods' rating='4.2 star' time='42mins'/> */}
  
-               {restList.map(restaurant=> (<RestaurantCard key={restaurant.info.id} resData={restaurant}/>),
+               {filterRestList.map(restaurant=> (<RestaurantCard key={restaurant.info.id} resData={restaurant}/>),
             )}
              
           </div>

@@ -296,3 +296,8 @@ Output -> Body rendered
 NOTE : Why React is afster?
 React is faster bcoz of Virtual DOM, the reconcilation algoritm (React Fiber) which comapres the two Virtaul DOM (older and updated one)
 and only changes the updated part , makes React faster.
+
+
+# Episode 6.1
+How to find API and get data from that
+Go to Inspect -> Network ->Fetch/XHR (it will give us all the API call)
