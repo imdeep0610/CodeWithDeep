@@ -1,6 +1,6 @@
 # REACT STORY
 # Episode 2
-NPM -> its a repo which hosted all the packages required to istall in our system
+NPM -> its a repo which hosted all the packages required to iNstall in our system
 its full form is not Node Package Manager
 
 Package.json -> it will give a json file having all the packages [also called dependencies] which we need in our projects 
@@ -301,3 +301,113 @@ and only changes the updated part , makes React faster.
 # Episode 6.1
 How to find API and get data from that
 Go to Inspect -> Network ->Fetch/XHR (it will give us all the API call)
+
+# Episodes 7
+useEffect =>
+It is called whenever our component is rendered, but this can be controlled by using a dependancy array []
+useEffect(()=>{
+   console.log('UseEffect called');
+},[])
+1.When we don't pass any dependancy array , it will called everytime , component get rendered
+2.When we have an empty array , it is called once only after initial render
+3.When we have some dependancy in the array , then useEffect is called only when the dependancy changes
+
+useState =>
+It is used to create local state variables inside our functional component, at the top.
+Never use useState outside the component and even in if else(in conditional part) , in loop and even in normal functions.
+eg : const [count,setCount]=useState('');
+    const Component=()=>{}
+
+
+ROUTING => We use a JS library called react-router-dom  
+import { createBrowserRouter , Router, RouterProvider} from 'react-router-dom';
+createBrowserRouter -> It will create a context for the routing
+RouterProvider -> It will provide the wrapper for all the component 
+
+const appRouter=createBrowserRouter([
+  {
+    path:'/',  -> this will take us to the given page
+    element:<AppLayout/>,
+    errorElement:<Error/>  -> it will take u to custom error page if we have given wrong path 
+                              even React has default error page , but using this we can make our own error page.
+  }, 
+])
+
+we have one hook also present -> useRouteError from 'react-router-dom'
+Basically it gives details info about error (basically gives us an object)
+import { useRouteError } from "react-router-dom";
+const Error=()=>{
+    const err=useRouteError();
+    console.log(err); --> it is an object having diff properties which is giving info about error and we can use it in our error page
+  return(
+    <div>
+        <h1>OOPs</h1>
+        <h2>Something went wrong!</h2>
+        <h3>{err.status}</h3>
+    </div>
+  )
+}
+export default Error;
+
+Outlet -> <Outlet /> is a placeholder where child routes get rendered.
+          It allows you to nest routes inside parent components/layouts.
+
+Now we want Header to be a part of each page at the top and below it different pages get loaded a/c to the given path
+We will make <AppLayout/> as parent and then load all other pages as its children and then send it to this array of children to  <Outlet/> according to the chnage in the path, it will take the given path and load the page.
+For eg: if we go to <About/> page , outlet will be filled with the About page.
+const AppLayout=()=>{
+  return(
+    <div>
+        <Header/>
+        <Outlet/>  -> Outlet is an component given by 'react-router-dom'
+    </div>
+  )
+}
+
+const appRouter=createBrowserRouter([
+  {
+    path:'/',
+    element:<AppLayout/>,
+    children:[
+        {
+           path:'/',
+           element:<Body/>
+        },
+        {
+          path:'/about',
+          element:<About/>
+        },
+        {
+          path:'/contact',
+          element:<Contact/>
+        }
+      
+    ],
+    errorElement:<Error/>
+  },
+  
+])
+
+Like this we can have multiple parents and multiple children, we can create children routes in the outlet by loading in it.
+Behind the scene , when we call any page , this outlet get replaced by the given children content
+
+Navigation using Links ->
+In HTML , we use <a> tag, but in react we use <Link></Link> imported from 'react-router-dom'
+basically <a> reload the whole page , but in <Link> refreshes the component, no reloading of whole page , that is why react is called 
+Single Page Application (SPA) , here all thing is present in single page App and only component is getting refreshed here.
+<Link to='#'>Home</Link>
+
+NOTE : Behind the scene <Link> is using <a> tag only , if u go to console and check html code <a> will be present instead of <Link>
+
+There are 2 types of Routing 
+1. Server Side Routing -> When we click on <a> tag(for eg: about us page) , it reload the whole page , it makes an network call to About us page , it fetches the HTML page and render it on browser. 
+It is how our web page used to work
+
+2. Client Side Routing -> It doesn't do any network calls , it already have all the pages just load the component when required.
+<Link> do this
+
+
+Dynamic Routing -> {
+          path:'/restaurants/:redId', -> here : says that next to it is dynamic , it get chnaged 
+          element:<RestaurantMenu/>
+        }
