@@ -411,3 +411,91 @@ Dynamic Routing -> {
           path:'/restaurants/:redId', -> here : says that next to it is dynamic , it get chnaged 
           element:<RestaurantMenu/>
         }
+
+
+
+
+
+# Episode 8
+Function based component -> Its a js function which return a piece of JSX code.
+Class Based component -> Its a javascript class having render() , which gives us a piece of JSX code.
+import React from 'react';
+
+React.Component is a class which is given by react and given class will inherit some property from it and this React.Component is given by React to us. This extending of React.Component tells us that it's an class component.
+It has this render() which return the jsx code which eventually changed into HTML code and gives us desired UI.
+
+import React from 'react';
+class UserClass extends React.Component{ 
+  constructor(props){
+      super(props);
+  }
+  render(){
+    return(
+        <div className="user-card">
+            <h2>Name : {this.props.name}</h2>
+            <h3>Location : Banglore</h3>
+            <h4>Contact : deep@gmail.com</h4>
+        </div>
+    )
+  }
+}
+export default UserClass;
+
+How to get access of props in class component 
+About Page : 
+<UserClass name={'Deepshikha Singh'} loaction={'Banglore'}/>
+and in class component , we use constructor to get access of props and use it with {this.props.name} -> always use with this keyword 
+
+super() calls the parent class (React.Component) -> super(props) sends the props to that parent ->That’s how React knows what this.props should be.
+
+Why use super()->
+super() is a special keyword in JavaScript used inside a subclass constructor (like your React component).
+It calls the constructor of the parent class (React.Component in this case).
+In JavaScript, when a class extends another class, you must call super() before using this.
+
+So basically whenever the instance of class is created , a constructor is called and the props is extracted over here and we can use it anywhere in the code now.
+We can pass multiple props h.ere , it will combined as a object and extracted in constructor and used
+
+
+States in class component ->
+Creating an instance of class means , loading a class component , and when a instance is created , a constructor is called which is the best place to get PROPS and STATE
+
+constructor(props){
+      super(props);
+      console.log(props);
+
+      this.state={  -> state is an reserved word here , it's a big object that contains all state variable
+        count:1,
+      }
+ }
+
+Even in functional component , in background all state variables are stored in one big object.
+
+How to update the state variable
+constructor(props){
+      super(props);
+      console.log(props);
+
+      this.state={
+        count:1,
+        count2:2,
+        count3:3,
+      }
+ }
+
+<h1>Count : {count}</h1>    {/* {this.state.count} -> if we didn't destructure it  */}
+            <button onClick={()=>{
+                //NEVER UPDATE STATE VARIABLE DIRECTLY -> this.state.count=this.state.count+1;
+                this.setState({ //this.setState() is an function given by react and we pass an object inside it
+                    count:this.state.count+1,  //this is how we update the state variable
+                    count2:this.state.count2 +1,
+                })
+            }}>Count</button>
+            <h2>Count : {count2}</h2> 
+
+It will update only those variable which is present in setState() , rest others are not updated [only count, count2 get updtaed]
+
+LIFECYCLE Methods of class component
+
+
+

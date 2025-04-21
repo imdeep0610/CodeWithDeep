@@ -13,10 +13,10 @@ const Header=()=>{
          </div>
          <div className='nav-items'>
             <ul>
-               <li><Link to='#'>Home</Link></li>
-               <li><Link to='#about'>About Us</Link></li>
-               <li><Link to='#contact'>Contact</Link></li>
-               <li><Link to='#cart'><img src={CART_URL} alt="Cart"/></Link></li>
+               <li><Link to='/'>Home</Link></li>
+               <li><Link to='/about'>About Us</Link></li>
+               <li><Link to='/contact'>Contact</Link></li>
+               <li><Link to='/cart'><img src={CART_URL} alt="Cart"/></Link></li>
                <button className='login' onClick={(()=>{
                   loginBtn==='Login' ? (setLoginBtn('Logout')) : (setLoginBtn('Login'))
                })}>{loginBtn}</button>

@@ -20,7 +20,7 @@ const [resMenu,setResMenu]=useState(null);
 
    const {name,cuisines,cloudinaryImageId,costForTwoMessage} = resMenu?.cards[2]?.card?.card?.info || 'No data found';
 
-   const {itemCards}=resMenu?.cards[]
+   const {itemCards}=resMenu?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card || 'No data found';
  
   if(resMenu===null){
         return <Shimmer/>;
@@ -32,10 +32,9 @@ const [resMenu,setResMenu]=useState(null);
        <h3>{}</h3>
        <h2>{}</h2>
        <ul>
-          <li>Burger</li>
-          <li>Biryani</li>
-          <li>Pizza</li>
-          <li>Coffee</li>
+          {itemCards.map((item)=>{
+            <li key={item.card.info.id}>{item.card.info.name} - {item.card.info.price/100}</li>
+          })}
        </ul>
     </div>
    )
