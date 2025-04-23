@@ -424,8 +424,8 @@ import React from 'react';
 React.Component is a class which is given by react and given class will inherit some property from it and this React.Component is given by React to us. This extending of React.Component tells us that it's an class component.
 It has this render() which return the jsx code which eventually changed into HTML code and gives us desired UI.
 
-import React from 'react';
-class UserClass extends React.Component{ 
+import React from 'react';                     // import {Component} from 'react'
+class UserClass extends React.Component{       // class UserClass extends Component {}
   constructor(props){
       super(props);
   }
@@ -496,6 +496,97 @@ constructor(props){
 It will update only those variable which is present in setState() , rest others are not updated [only count, count2 get updtaed]
 
 LIFECYCLE Methods of class component
+When a class component is called , it start loading , means an instance of that class is called then "CONSTRUCTOR" is called then only RENDER() is called.
+
+class Parent extends React.Component {
+  <Child/>
+}
+If parent is also class component where we called the new class component , then the order will be ->
+Parent Constructor -> Parent Render -> Child Constructor -> Child Render
+
+componentDidMount(){} -> this method is called after the component is mounted into the DOM 
+constructor -> render -> componentDidMount()
+
+In case Parent compontne is also class component 
+Parent Constructor -> Parent Render -> Child Constructor -> Child Render -> Child ComponentDidMount() -> Parent ComponentDidMount()
+
+In componentDidMount() we do API calls, because our react working hierarchy is ->
+Render the component -> API calss -> Render the data in component 
+here we first render the component using render() , then only do the API calls in componentDidMount() and again render it 
 
 
+class Parent extends React.Component {
+  <Child1/>
+  <Child2/>
+}
 
+Parent constructor -> Parent render -> Child1 constructor -> Child1 render -> Child2 constructor -> Child2 render -> Child1  componentDidMount() -> Child2 componentDidMount() -> Parent componentDidMount()
+
+Here React will batched the render phase of all its child and give the result , this is optimization in react.
+
+Here when our component is rendered and updated into the DOM , then only componentDidMount is called (that's why it is the best place for API calls also, so they get the data and quickly update the data as component is already rendered.)
+
+Till render it is called MOUNTING Phase and componentDidMount() is commiting phase
+DOM manipulation is the most expensive thing in the React , so in render phase only React bathces all child rendering and in commit phase it will update it together.
+Each component will completes its whole lifecycle 
+
+How API calls done in componentDidMount ->
+1. Mounting Cycle
+when class component is called , instance is created , then constructor is called the state variable is create with some default value
+constructor(props){
+      this.userInfo={
+        name:'Dummy',
+        location:'Muzaffarpur',
+        avatar_url:'https.google.com'
+      }
+ }
+then render() happens with the default value only that is given above [if we see carefully these dummy data will appear for millisec]
+render(){
+  return(
+        <div className="user-card">
+            <h2>Name : {name}</h2> 
+            <img src={avatar_url} alt={name}/>
+            <h3>Location : {bio}</h3>
+            <h4>Contact : deep@gmail.com</h4>
+        </div>
+    )
+  }
+
+2. Updating Cycle
+Now componentDidMount() is called and then only API call was made and this.setState is called , now the updating cycle starts 
+and react will again called the render() which will update the page with API data and then a new method 
+"componentDidUpdate()" is called
+
+3. Unmounting Cycle
+componentWillUnmount() -> This will call just before the component will unmounted from DOM , like if we go to diff pages etc.
+
+useEffect(()=>{
+   console.log('Render everytime count is updated');
+},[count,count2])
+
+componentDidUpdate(prevProps,prevState){
+   if(this.state.count!==prevState.count || this.state.count2!==prevState.count2){
+       console.log('Work same as useEffect(()=>{},[count,count2])')
+   }
+}
+and if we want diff things to get render on both state variable
+
+useEffect(()=>{
+   console.log('Render everytime count is updated');
+},[count])
+useEffect(()=>{
+   console.log('Render everytime count is updated');
+},[count2])
+ 
+ Both are equivalent
+
+componentDidUpdate(prevProps,prevState){
+   if(this.state.count!==prevState.count){
+       console.log('Work same as useEffect(()=>{},[count])')
+   }
+
+   if(this.state.count2!==prevState.count2){
+      console.log('Work same as useEffect(()=>{},[count2])')
+   }
+}
+And that's why we use array in useEffect to carry multiple state variable.
