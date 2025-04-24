@@ -412,6 +412,16 @@ Dynamic Routing -> {
           element:<RestaurantMenu/>
         }
 
+useParams() -> imported from react-router0dom
+It is used to fetch the id of params.
+fetch('https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.594048&lng=88.335677&restaurantId=225')
+MENU_ID=https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.594048&lng=88.335677&restaurantId=
+ 
+const {resId}=useParams();
+
+fetch(MENU_ID + resId)
+useParams will dynamically fetch the id
+
 
 
 
@@ -590,3 +600,15 @@ componentDidUpdate(prevProps,prevState){
    }
 }
 And that's why we use array in useEffect to carry multiple state variable.
+
+
+
+# Episode 9
+How to make more cleaner
+Always prefer Single Responsibility Principle
+Modular -> breaking our code into diff diff modules so that it is easily maintainable.
+
+Custom Hooks -> It is also a normal JS utility function to which we can give some resposibility of component to make out code more modular by directly using it whenevre we need it.They are just a helper function.
+Always place it in utils folder
+It makes our code more readable , reusable , modular , cleaner.
+
