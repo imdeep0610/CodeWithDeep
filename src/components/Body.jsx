@@ -1,7 +1,8 @@
-import RestaurantCard from './RestaurantCard';
+import RestaurantCard , {withPromotedLabel} from './RestaurantCard';
 import Shimmer from '../components/Shimmer';
 import {useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import useOnlineStatus from '../utils/useOnlineStatus';
 
 const Body=()=>{
    const [restList,setRestList]=useState([]);
@@ -26,6 +27,13 @@ const Body=()=>{
       console.log(res);
     }
 
+    const onlineStatus=useOnlineStatus();
+    if(onlineStatus===false) return(
+      <h1>Looks like you're offline !! Please check your internet connection</h1>
+    )
+
+    const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+
 
 /*This is called Conditional Rendering -> rendering of UI on the basis of some condition, it can be done using ternary operator also    
     if(restList.length===0){
@@ -34,10 +42,10 @@ const Body=()=>{
 
     return restList.length===0 ? (<Shimmer/>) : (
        <div className='body'>
-          <div className='filter'>
-            <div className='search'>
-               <input type='text' className='search-box' value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
-               <button onClick={()=>{
+          <div className='filter flex'>
+            <div className='search m-4 p-4'>
+               <input type='text' className='search-box border border-solid border-black' value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
+               <button className='px-4 m-4 py-1 rounded-lg bg-green-300' onClick={()=>{
                   console.log(searchText)
                  const filterRes= restList.filter((res)=>{
                       return res.info.name.toLowerCase().includes(searchText.toLowerCase());
@@ -47,19 +55,27 @@ const Body=()=>{
                   setFilterRestList(filterRes);
                }}>Search</button>
             </div>
-              <button className='filter-btn' onClick={()=>{
+            <div className=' flex items-center'>
+               <button className='filter-btn px-4 py-1 rounded-lg m-4 bg-red-300' onClick={()=>{
                  const filterList=restList.filter((res)=>res.info.avgRating >4.2);
                  console.log(filterList)
                //   setRestList(filterList);
                  setFilterRestList(filterList)
               }}>Top Rated Restaurant</button>
+              </div>
           </div>
-          <div className='res-container'>
+          <div className='res-container flex flex-wrap'>
               {/* <RestaurantCard resName='Deep Flavour'  cuisines='North Indian Food , Asian' rating='4.4 star' time='38 mins'/>
               <RestaurantCard resName='KFC' cuisines='Burger , Fast Foods' rating='4.2 star' time='42mins'/> */}
  
                {filterRestList.map(restaurant=> (
-                 <Link  key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id}><RestaurantCard resData={restaurant}/></Link>),
+                 <Link  key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id}>
+                   {restaurant.info.promoted ? (
+                     <RestaurantCardPromoted resData={restaurant}/>
+                   ) :(
+                     <RestaurantCard resData={restaurant}/>
+                   )}
+                  </Link>),
             )}
              
           </div>

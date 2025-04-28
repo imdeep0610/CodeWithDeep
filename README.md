@@ -612,3 +612,55 @@ Custom Hooks -> It is also a normal JS utility function to which we can give som
 Always place it in utils folder
 It makes our code more readable , reusable , modular , cleaner.
 
+window : online event -> addEventListener("online", (event) => {});
+ononline = (event) => {};
+This event listener gives us the online status of the user.
+
+
+Bundlers -> It bundles our code into single js file and give it to browser , but if we have large no of components in same js file , it took some time to load , so we need to make smaller bundles of these files.
+This process is known as Chunking (App Chunking)/ Code Splitting / Dynamic Bundling / Lazy Loading / On-demand loading / Dynamic Import
+
+For large scale application , we need to broke our bundlers into smalles part , so it doesn't take much time to get loaded.
+Here we make diff bundles for Grocery (just assume its a very large component like in swiggy , one is for food deliver and other is for grocery.)
+
+To put grocery in diff bundler , we need to import it differently using lazy loading , means initially our code doesn't have this grocery part , but when we go to the link it loads the grocery components.
+
+import React , {lazy} from 'react';
+const Grocery=lazy(()=>import('./components/Grocery'))
+{
+          path:'/grocery',
+          element:<Suspense fallback={<h1>Loading....</h1>}><Grocery/></Suspense>
+        },
+We import Grocery using , lazy(). lazy is a function imported from react library (named export) , this lazy function takes an callback function in which we use another function called "import()" in which we take the path './components/Grocery'
+
+In this way of importing make Grocery doesn't load it when web page gets loaded until we go to Grocery link and it get loaded in diff js file . Our main bundle doesn't have Grocery part , it has its own bundler.
+
+But this loading took some time , till then web page shows something went wrong , shjowing error.
+At that middle state , react try to render Grocery and it is not present , so it shows error.
+React gives a component called Suspense which gives us the fallback UI
+
+
+
+# Episode 10
+Different ways of using CSS ->
+1. Normal CSS    2. SAAS & LESS  3. Styled Component   4. Tailwind , Material UI , Chakra UI , Bootstrap , Ant Design
+
+Tailwind CSS -> It uses Post CSS (a tool) to transform css into Js.
+Steps :
+1. npm install tailwindcss @tailwindcss/postcss 
+2. create a .postcssrc file and put this code
+{
+  "plugins": {
+    "@tailwindcss/postcss": {}
+  }
+}
+This will create configuration file for postcss.This will tell that we are using tailwind , basically .postcssrc is used by parcel to read tailwind.
+
+3. Create tailwind.css file inside src -> @import "tailwindcss";
+
+
+
+# Episode 11
+Higher Order Component -> Its a function that takes a component and enhances it and return a component.
+
+

@@ -13,11 +13,11 @@ const RestaurantCard=(props)=>{
        costForTwo
     }=resData?.info;
     return(
-       <div className='res-card'>
-          <img className='res-logo' 
+       <div className='res-card m-4 p-4 w-[250px] bg-gray-300  hover:bg-gray-700 rounded-md'>  {/*If we want to write any pixel which is not present then w-[200px] */}
+          <img className='res-logo rounded-lg' 
           src={CDN_URL+cloudinaryImageId}
           alt='Logo'/>
-          <h3>{name}</h3>
+          <h3 className='font-bold py-3 text-xl'>{name}</h3>
           <h4>{cuisines.join(',')}</h4>
           <h4>{avgRating}</h4>
           <h4>{deliveryTime} mins</h4>
@@ -25,4 +25,17 @@ const RestaurantCard=(props)=>{
        </div>
     )
 }
+
+ //It takes a component and return a component.
+ export const withPromotedLabel=(RestaurantCard)=>{
+   return(props)=>{
+       return(
+         <div>
+            <label>Promoted</label>
+            <RestaurantCard {...props}/>
+         </div>
+       )
+   }
+}
+
 export default RestaurantCard;
