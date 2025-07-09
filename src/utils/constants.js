@@ -5,4 +5,4 @@ export const LOGO_URL=
 export const CART_URL=
              'https://cdn-icons-png.flaticon.com/512/263/263142.png';
 export const MENU_API=
-              'https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.594048&lng=88.335677&restaurantId='             
+                'https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.594048&lng=88.335677&restaurantId=' 

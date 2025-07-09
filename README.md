@@ -662,5 +662,36 @@ This will create configuration file for postcss.This will tell that we are using
 
 # Episode 11
 Higher Order Component -> Its a function that takes a component and enhances it and return a component.
+For eg : A restaurant cards , some having that promoted label and others doesn't have . So , basically we create a HOC here , take the backend data if that Restaurant has promoted label then pass it through HOC otherwise normal component.
 
 
+React application has 2 layer -> UI layer , Data layer
+
+Data Layer-> It consists of all the state, props and combine with UI layer and enhance it.
+
+If we have added React Dev Tools Extension in chrome, it give two more thing  
+Profilier   (for these two option see in the last of >> this sign is present , click on it)
+Components
+
+Component -> This is very helpful for debugging
+It will show all the components we used 
+Divided i to two part -> left one : UI layer  ryt one : Data layer (all the props present in the app)
+
+Profilier -> It basically record our react application (all our activities going on in our app)
+for ex -> we have open Item List , it will show this and even tells us how much time it has taken in rendering
+
+
+Controlled Componments -> If a component is controlled by parents components , then its controlled component 
+otherwise its UNCONTROLLED COMPONENTS
+
+Context API 
+When we want to avoid prop drilling , we use it to share data in the application
+
+1. create Context using createContext -> then Provider -> using useContext() hook , we can access data
+But to use context in class component , we use UseContext.Consumer
+
+<div><UseContext.Consumer>
+{({loggedInUser})=>(
+  <h1></h>
+)}
+</UseContext.Consumer></div>

@@ -1,8 +1,9 @@
 import RestaurantCard , {withPromotedLabel} from './RestaurantCard';
 import Shimmer from '../components/Shimmer';
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useContext} from 'react';
 import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utils/useOnlineStatus';
+import UserContext from '../utils/UserContext';
 
 const Body=()=>{
    const [restList,setRestList]=useState([]);
@@ -13,15 +14,18 @@ const Body=()=>{
         fetchData();
     },[]);
 
+    const {setUserName,loggedInUser}=useContext(UserContext)
     const fetchData=async()=>{
       const data=await fetch(
          'https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.594048&lng=88.335677&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
       );
 
+      
+
       const res=await data.json();
       setRestList(res?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
-      /*Here we are using thiswhen we want to filter on the basis of search result bcoz when we use only setRestList , it will 
+      /*Here we are using this when we want to filter on the basis of search result bcoz when we use only setRestList , it will 
       give the correct ans in only first time , next time we want to filter it will try to filter on the already filter data*/ 
       setFilterRestList(res?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
       console.log(res);
@@ -62,7 +66,12 @@ const Body=()=>{
                //   setRestList(filterList);
                  setFilterRestList(filterList)
               }}>Top Rated Restaurant</button>
+              <div>
+                <label>Username : </label>
+                <input className='border border-black p-3' value={loggedInUser} onChange={(e)=>setUserName(e.target.value)}/>
               </div>
+              </div>
+              
           </div>
           <div className='res-container flex flex-wrap'>
               {/* <RestaurantCard resName='Deep Flavour'  cuisines='North Indian Food , Asian' rating='4.4 star' time='38 mins'/>

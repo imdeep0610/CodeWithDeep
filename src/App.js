@@ -1,4 +1,4 @@
-import React , {lazy,Suspense} from 'react';
+import React , {lazy,Suspense,useEffect,useState} from 'react';
 import './style.css'
 import ReactDOM from 'react-dom/client';
 import Header from './components/Header';
@@ -9,6 +9,7 @@ import Error from './components/Error';
 // import Grocery from './components/Grocery';
 import RestaurantMenu from './components/RestaurantMenu';
 import { createBrowserRouter , Router, RouterProvider,Outlet} from 'react-router-dom';
+import UserContext from './utils/UserContext';
 
 
 
@@ -23,11 +24,28 @@ Footer -> 1.Copyright  2.Links  3.Address 4.Contacts
 const Grocery=lazy(()=>import('./components/Grocery'))
 
 const AppLayout=()=>{
+
+  const [userName,setUserName]=useState();
+
+  //Authentication
+  useEffect(()=>{
+    //Make an API call and send username and password
+    const data={
+      name:'Deepshikha Singh'
+    }
+    setUserName(data.name)
+},[])
+{/*Here we have used Context under context which is a completely valid code , for header data = Shanu Shubham while
+   for others its Deepshikhe Singh  */}
   return(
+    <UserContext.Provider value={{loggedInUser:userName,setUserName}}>
     <div>
+       <UserContext.Provider value={{loggedInUser:userName}}>
         <Header/>
+        </UserContext.Provider>
         <Outlet/>
     </div>
+    </UserContext.Provider>
   )
 }
 
@@ -53,7 +71,7 @@ const appRouter=createBrowserRouter([
           element:<Suspense fallback={<h1>Loading....</h1>}><Grocery/></Suspense>
         },
         {
-          path:'/restaurants/:redId',
+          path:'/restaurants/:resId',
           element:<RestaurantMenu/>
         }
     ],
