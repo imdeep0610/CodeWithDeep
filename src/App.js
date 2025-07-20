@@ -10,8 +10,9 @@ import Error from './components/Error';
 import RestaurantMenu from './components/RestaurantMenu';
 import { createBrowserRouter , Router, RouterProvider,Outlet} from 'react-router-dom';
 import UserContext from './utils/UserContext';
-
-
+import {Provider} from 'react-redux';
+import appStore from './utils/appStore';
+import Cart from './components/Cart';
 
 /*
 Heading -> 1.Logo  2.Nav Items
@@ -38,6 +39,7 @@ const AppLayout=()=>{
 {/*Here we have used Context under context which is a completely valid code , for header data = Shanu Shubham while
    for others its Deepshikhe Singh  */}
   return(
+    <Provider store={appStore}>
     <UserContext.Provider value={{loggedInUser:userName,setUserName}}>
     <div>
        <UserContext.Provider value={{loggedInUser:userName}}>
@@ -46,6 +48,7 @@ const AppLayout=()=>{
         <Outlet/>
     </div>
     </UserContext.Provider>
+    </Provider>
   )
 }
 
@@ -73,6 +76,10 @@ const appRouter=createBrowserRouter([
         {
           path:'/restaurants/:resId',
           element:<RestaurantMenu/>
+        },
+        {
+          path:'/cart',
+          element:<Cart/>
         }
     ],
     errorElement:<Error/>

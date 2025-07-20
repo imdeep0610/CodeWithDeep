@@ -695,3 +695,46 @@ But to use context in class component , we use UseContext.Consumer
   <h1></h>
 )}
 </UseContext.Consumer></div>
+
+
+# Episode 12
+React and Redux is separate libraries.
+Even ZUSTAND is a library used in React for managing state , but redux offers easy debugging
+
+Why Redux Toolkit is used
+1.Using redux is quite complicated task , we need to learn a lot of things to us it.
+2. It used a lot of packages to work Redux
+3.Redux uses a lot of boilerpot code
+
+Adding something in the cart
+When we click on Add -> it dispatch an ACTION -> then a REDUCER function is called which will update the cart slice -> 
+cart component of our app is SUBSCRIBED to our store using SELECTOR (using this cart access store data) 
+
+This linking between REDUX and REACT is called SUBSCRIBING.
+
+Store has many slices like cartSlice , courseSlice etc having data related to respective components.
+
+1. Install  @reactjs/toolkit and react-redux
+2. Build our store
+3. Connect our store to our app
+4. Create a slice 
+5. Dispatch an action 
+6. updating data using reducer
+7. Access data using selector
+
+1.const cartItems=useSelector((store)=>store.cart.items) -> this will subscribe to the selective portion of the store , i.e cart
+
+2.const store=useSelector((store)=>store);
+const cartItem=store.cart.items 
+
+both will work same , but later one is less efficient bcoz in case 2 , it will subscribe to the whole store so if any update
+happens in store will update it also . This will reduce the performance bcoz why cart section will get affected when for eg payment section has some update.
+So always prefer case 1
+But in background redux is still doing the whole things 
+
+Redux is using Immer js library behind the scene.
+
+
+In store when we create reducer , it's one big REDUCER only(in addStore.jsx) (containing all the reducers ) 
+but while creating slices , we use REDUCRES bcoz its multiple reducers function  and while exporting it , we use 
+REDUCER only bcoz we are exporting all reducres function in one(in cartSlice.jsx)
