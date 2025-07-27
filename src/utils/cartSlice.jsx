@@ -19,6 +19,8 @@ const cartSlice=createSlice({
             state.items.pop();
         },
         clearCart:(state)=>{
+
+            // state
             state.items.length=0; //this is the righy way to mutate the state or even return empty array return {items : []}
         }
     }

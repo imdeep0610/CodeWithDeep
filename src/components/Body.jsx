@@ -45,10 +45,14 @@ const Body=()=>{
     }*/
 
     return restList.length===0 ? (<Shimmer/>) : (
-       <div className='body'>
+       <div className='body'
+       data-testid='resCard'>
           <div className='filter flex'>
             <div className='search m-4 p-4'>
-               <input type='text' className='search-box border border-solid border-black' value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
+               <input data-testid="searchInput"
+               type='text' 
+               className='search-box border border-solid border-black'
+                value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
                <button className='px-4 m-4 py-1 rounded-lg bg-green-300' onClick={()=>{
                   console.log(searchText)
                  const filterRes= restList.filter((res)=>{

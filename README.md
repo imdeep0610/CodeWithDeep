@@ -738,3 +738,159 @@ Redux is using Immer js library behind the scene.
 In store when we create reducer , it's one big REDUCER only(in addStore.jsx) (containing all the reducers ) 
 but while creating slices , we use REDUCRES bcoz its multiple reducers function  and while exporting it , we use 
 REDUCER only bcoz we are exporting all reducres function in one(in cartSlice.jsx)
+
+
+
+# Episode 13
+
+Types of Testing
+
+1.Unit Testing -> In this we do testing of component in isolation , each feature testing.
+
+2.Integration Testing -> In this testing , we integrate features and do testing .
+For eg -> We type something in search and the action performed accordingly.
+
+3.End-to-End Testing (e2e) -> This testing involves when the user lands on the website till user leaves the website , complete testing .
+Basically how user will go and use it , we test it.
+
+For developer , we mainly focus on first two types of testing.
+
+There are different types of library for testing in react
+
+1.React Testing Library
+It is build on top of DOM Testing Library (this is used wth all the framework)
+
+And this React testing library uses JEST(Its JS testing framework) behind the scene.
+
+Step1 : npm i -D  @testing-library/react -> first install React testing library
+Step2 : npm i -D jest -> install the JEST 
+  If we are using JEST with Babel , then add some additional Babel dependency with it.
+Step 3 : npm install --save-dev babel-jest @babel/core @babel/preset-env  
+Step4 : Configure Babel  create babel.config.js file and paste the below code.
+module.exports = {
+  presets: [['@babel/preset-env', {targets: {node: 'current'}}]],
+};
+
+We already have PARCEL (bundler) which is using BABEL already amd it has its own configuration for Babel , now JEST also uses Babel 
+having different configuration . So both contradicts , so we need to chnage some Parcel configuration so that both work.
+
+Create .parcelrc file and paste the below code
+{
+  "extends": "@parcel/config-default",
+  "transformers": {
+    "*.{js,mjs,jsx,cjs,ts,tsx}": [
+      "@parcel/transformer-js",
+      "@parcel/transformer-react-refresh-wrap"
+    ]
+  }
+}
+This will make parcel ignore default Babel configuration.
+
+Step 5 : Configure Jest 
+npx create-jest
+
+If we are using JEST 28 or above , we need to separately download the jsdom
+Step 6 : npm install --save-dev jest-environment-jsdom
+Jsdom -> Its a browser like environment where we run js test cases.
+
+We can create a folder named as __tests__ , any file inside it wth .js or .ts extension is considered as test file
+_abc_ -> it is called dunder(one _ ahead and one _ behind)
+or,
+any file having Header.test.js / Header.test.ts / Header.spec.ts / Header.spec.js -> is considered as test file
+
+We have test() -> it take two argument 
+1.String telling what we have to do
+2.Function
+test(" " , ()=>{})
+
+Whenever we are testing some component in react , we have to render it first in jsDOM using render() (imported from @testing-library/react) , this method will take the component which we want to render.
+render(<Contact/>)
+
+And to access the data from rendered component , we use screen -> (imported from @testing-library/react) 
+
+const heading=screen.getByRole('heading') -> it will give all the heading in that component
+
+expect(heading).toBeInTheDocument(): 
+If we run the code now , it will throw error
+
+Step 7: Install npm @babel/preset-react -> to make JSX work in test cases.
+
+Step 8 : module.exports = {
+  presets: [
+    ['@babel/preset-env', {targets: {node: 'current'}}],
+    ['@babel/preset-react',{runtime:'automatic'}] -> add this part in this in babel.config.js , this babel/preset will <Contact/> react code to chnage into normal js and html code
+],
+};
+
+Step 9 : Install [npm i @testing-library/jest-dom] library
+and import '@testing-library/jest-dom'; it in testing file
+
+eg: test ("Should load Contact Us page",()=>{
+    render(<Contact/>)
+
+   const heading= screen.getByRole('heading')
+
+   expect(heading).toBeInTheDocument();
+});
+
+
+In testing ,
+Render -> Querying -> Assertion
+
+Sometime we have 100-500 test cases , so we want to group the test cases using DESCRIBE
+
+describe(
+   test ("Should load Contact Us page",()=>{
+    render(<Contact/>)
+
+   const heading= screen.getByRole('heading')
+
+   expect(heading).toBeInTheDocument();
+});
+
+test ("Should load Contact Us page",()=>{
+    render(<Contact/>)
+
+   const heading= screen.getByRole('heading')
+
+   expect(heading).toBeInTheDocument();
+});
+)
+
+We can write describe under describe also (it nothing new just used to group test cases)
+
+And we can write IT instead of TEST (both are same)
+it("Should load Contact Us page",()=>{
+    render(<Contact/>)
+
+   const heading= screen.getByRole('heading')
+
+   expect(heading).toBeInTheDocument();
+});
+
+
+We have to run the test cases again and again which is a tough task , so we go to package.json -> scripts
+ "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest",
+    "watch-test":"jest --watch"
+  },
+
+and run the command "npm run watch-test" 
+It will automatically run the cases whenever we do some changes
+
+Whenever we are doing test on some async operations like fetch() or state updates , wrap your component inside act()
+import {act} from "react"
+ it("Should render the body component with Search" , async()=>{
+    await act(async()=>render(<Body/>)) 
+})
+
+When we are not able to find our element by role , placeholder or anything there is a method which will always work 
+screen.getByTestId("")
+Go to your actual component page and find the element, give it test id
+for ex: <input data-testid="searchInput"/>
+
+We can get a short description about what we have covered and not in the terminal but for complete info , go to 
+coverage folder -> Icon-report -> index.html (open this file using live server)
+This will tell excat places where test is covered or not
